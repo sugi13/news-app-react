@@ -1,0 +1,76 @@
+import { useState, useEffect } from "react";
+
+
+function App() {
+let key = 'qo1jrguXRBWlhYdOVAGPYRnUNPsOfzay';
+
+let [Category, setCategory] = useState('home');
+let [data, setData] = useState([]);
+
+useEffect(() =>{
+ fetch(`https://api.nytimes.com/svc/topstories/v2/${Category}.json?api-key=${key}`)
+.then((res) =>{
+ return res.json();
+})
+.then((data) =>{
+  console.log(data.results);
+  setCategory(data.results);
+  setData(data.results);
+})
+}, [Category]);
+
+
+  return (
+    <div>
+    <h1>News App</h1>
+    <button onClick={() => setCategory('arts')} >arts</button>
+    <button onClick={() => setCategory('science')} >science</button>
+    <button onClick={() => setCategory('world')} >world</button>
+    <button onClick={() => setCategory('home')} >Home</button>
+    {data.map((item, index) =>{
+      return <h1 key={index}>{item.title}</h1>
+    })}
+    </div>
+  )
+}
+
+export default App
+
+
+// key = 'qo1jrguXRBWlhYdOVAGPYRnUNPsOfzay';
+
+.home{
+    display: flex;
+    flex-direction: column;
+}
+.content {
+    display: grid;
+    grid-template-columns: repeat(3, 2fr);
+    gap: 30px;
+    margin: 30px;
+}
+.home-content-grid{
+    width: 400px;
+    height: auto;
+    padding: 25px;
+    border: 2px solid #262626;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.home-content-grid img{
+    width: 100%;
+}
+.home-content-grid #section{
+    background-color: #000000;
+    color: white;
+    padding: 10px;
+}
+.home-content-grid #link{
+    text-decoration: none;
+    background:#FCF44C;
+    padding: 10px;
+    color: black;
+    font-weight: 700;
+    font-size: .9rem;
+}
